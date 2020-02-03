@@ -73,7 +73,7 @@ class SystemOfEquations:
                               * self.answers[2][0]) / self.changed_matrix[-4][-5], self.variables[-4]))
 
     def output_result(self):
-        print("Results of computing get such answers:")
+        print("Results of computing, get such answers:")
         for number in range(3, -1, -1):
             print(self.answers[number][1], "=", self.answers[number][0])
 
@@ -83,7 +83,7 @@ class SystemOfEquations:
         self.find_answers()
         self.output_result()
 
-    def approve_answers(self):
+    def coeff_matrix(self):
         value_matrix = []
         for row in self.matrix_of_coefficients:
             value_row = []
@@ -91,4 +91,13 @@ class SystemOfEquations:
                 value_row.append(tuple_[0])
             value_matrix.append(value_row)
         print(value_matrix)
-        print(numpy.linalg.solve(value_matrix, self.value_vector))
+        return value_matrix
+
+    def approve_answers(self):
+        value_matrix = self.coeff_matrix()
+        print("Vector of answers using numpy: ", numpy.linalg.solve(value_matrix, self.value_vector))
+
+    def reverse_matrix(self):
+        value_matrix = self.coeff_matrix()
+        result = numpy.linalg.inv(value_matrix)
+        print(result)
