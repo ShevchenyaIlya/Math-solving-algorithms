@@ -83,21 +83,29 @@ class SystemOfEquations:
         self.find_answers()
         self.output_result()
 
-    def coeff_matrix(self):
+    def coefficient_matrix(self):
         value_matrix = []
         for row in self.matrix_of_coefficients:
             value_row = []
             for tuple_ in row:
                 value_row.append(tuple_[0])
             value_matrix.append(value_row)
-        print(value_matrix)
         return value_matrix
 
     def approve_answers(self):
-        value_matrix = self.coeff_matrix()
+        value_matrix = self.coefficient_matrix()
         print("Vector of answers using numpy: ", numpy.linalg.solve(value_matrix, self.value_vector))
 
     def reverse_matrix(self):
-        value_matrix = self.coeff_matrix()
+        value_matrix = self.coefficient_matrix()
+        result_matrix = [list(numpy.linalg.solve(value_matrix, [1, 0, 0, 0])),
+                         list(numpy.linalg.solve(value_matrix, [0, 1, 0, 0])),
+                         list(numpy.linalg.solve(value_matrix, [0, 0, 1, 0])),
+                         list(numpy.linalg.solve(value_matrix, [0, 0, 0, 1]))]
+        result_matrix = numpy.transpose(result_matrix)
+        print(result_matrix)
+
+    def reverse_matrix_numpy(self):
+        value_matrix = self.coefficient_matrix()
         result = numpy.linalg.inv(value_matrix)
         print(result)
