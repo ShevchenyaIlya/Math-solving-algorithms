@@ -147,3 +147,13 @@ class SystemOfEquations:
         self.relative_decision_error = matrix_rate * reverse_matrix_rate * relative_error
         print("Absolute decision error:", self.absolute_decision_error)
         print("Relative decision error:", self.relative_decision_error)
+
+
+if __name__ == "__main__":
+    system = SystemOfEquations()
+    system.input_system_of_equations()
+    system.transform_matrix()
+    system.result()
+    system.approve_answers()
+    system.reverse_matrix()
+    system.error_rating()
