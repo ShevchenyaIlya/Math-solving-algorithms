@@ -9,6 +9,9 @@ class SystemOfEquations:
         self.variables = []
         self.answers = []
         self.changed_matrix = []
+        self.absolute_error = 1e-3  # Value from task condition
+        self.absolute_decision_error = 0
+        self.relative_decision_error = 0
 
     def input_system_of_equations(self):
         system_rows = []
@@ -108,4 +111,29 @@ class SystemOfEquations:
     def reverse_matrix_numpy(self):
         value_matrix = self.coefficient_matrix()
         result = numpy.linalg.inv(value_matrix)
-        print(result)
+        return result
+
+    def max_sum_of_element_in_collection(self, reverse):
+        if reverse:
+            value_matrix = self.reverse_matrix_numpy()
+        else:
+            value_matrix = self.coefficient_matrix()
+        for row in value_matrix:
+            counter = 0
+            for element in row:
+                row[counter] = abs(element)
+                counter += 1
+        vector_of_sum = []
+        for row in value_matrix:
+            vector_of_sum.append(sum(row))
+        return max(vector_of_sum)
+
+    def error_rating(self):
+        matrix_rate = self.max_sum_of_element_in_collection(False)
+        reverse_matrix_rate = self.max_sum_of_element_in_collection(True)
+        max_free_value = max(self.value_vector)
+        relative_error = self.absolute_error / max_free_value
+        self.absolute_decision_error = self.absolute_error * reverse_matrix_rate
+        self.relative_decision_error = matrix_rate * reverse_matrix_rate * relative_error
+        print("Absolute decision error:", self.absolute_decision_error)
+        print("Relative decision error:", self.relative_decision_error)
